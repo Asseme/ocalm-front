@@ -1,0 +1,62 @@
+<main>
+    <section class="registration-form-container container">
+        <form [formGroup]="reservationForm" (ngSubmit)="submitForm()">
+            <h2>Formulaire d'enregistrement</h2>
+            <mat-form-field class="registration-field">
+                <mat-label>Nom :</mat-label>
+                <input matInput formControlName="firstName" required>
+            </mat-form-field><br>
+            <mat-form-field class="registration-field">
+                <mat-label>Prenoms :</mat-label>
+                <input matInput formControlName="lastName">
+            </mat-form-field><br>
+            <mat-form-field class="registration-field">
+                <mat-label>Contact:</mat-label>
+                <input matInput formControlName="contact" required>
+            </mat-form-field><br>
+            <mat-form-field appearance="outline" class="registration-field">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startDatePicker" [max]="this.maxDate" formControlName="startDate" required>
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+                <mat-error *ngIf="reservationForm.get('startDate')?.hasError('required')">Start Date is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="registration-field">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" (dataChange)="getMaxDate()" required>
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+                <mat-error *ngIf="reservationForm.get('endDate')?.hasError('required')">End Date is required</mat-error>
+            </mat-form-field>
+
+            <mat-label>Heure: </mat-label>
+            <mat-radio-group formControlName="heure" required>
+                <mat-radio-button class="example-margin" value="matin">Matin</mat-radio-button>
+                <mat-radio-button class="example-margin" value="soir">Soir</mat-radio-button>
+            </mat-radio-group>
+            
+            <mat-form-field class="registration-field">
+                <mat-label>Nombre de jours:</mat-label>
+                <input matInput formControlName="quantity" (input)="calculMontant()" required>
+            </mat-form-field><br>
+            <mat-form-field class="registration-field">
+                <mat-label>Prix convenu:</mat-label>
+                <input matInput formControlName="price" (input)="calculMontant()" required>
+                <mat-error *ngIf="reservationForm.get('price')?.hasError('multipleOfFive')">
+                    Le prix doit être un nombre est un multiple de 5 (FCFA oblige).
+                </mat-error>
+            </mat-form-field><br>
+            <div class="buttons">
+                <button class="registration-clear-button" mat-raised-button color="warn"
+                    (click)="resetForm()">Effacer</button>
+                <button class="registration-button" mat-raised-button color="primary" type="submit">Ajouter</button>
+            </div>
+            <div class="montants">
+                <p class="montant-total-label">Montant total</p>
+                <div class="montan-total">{{montantTotal}}</div>
+            </div>
+        </form>
+    </section>
+</main>

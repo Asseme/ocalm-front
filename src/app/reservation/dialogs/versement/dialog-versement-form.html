@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Informations du versement</h1>
+<div mat-dialog-content>
+    <p>Nom</p>
+    <mat-form-field>
+        <mat-label>Le Nom</mat-label>
+        <input matInput [(ngModel)]="data.name">
+    </mat-form-field>
+</div>
+
+<div mat-dialog-content>
+    <p>La date</p>
+    <mat-form-field>
+        <mat-label>La date</mat-label>
+        <input matInput [matDatepicker]="startDatePicker" required [(ngModel)]="data.dateVersement">
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-content>
+    <p>Montant</p>
+    <mat-form-field>
+        <mat-label>Le montant</mat-label>
+        <input matInput [(ngModel)]="data.amount">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Non merci</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
